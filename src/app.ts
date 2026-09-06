@@ -1,8 +1,11 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import pkg from "../package.json";
 import { config } from "./config";
+import { envCheck } from "./env-check";
 import { generateSpec } from "./generate-openapi-spec";
 import { autoloadRoutes } from "./routes/autoload";
+
+await envCheck();
 
 export const app = new OpenAPIHono();
 export type App = typeof app;

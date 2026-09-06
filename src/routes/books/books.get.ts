@@ -43,11 +43,9 @@ booksRouter.openapi(booksGetRoute, async (c) => {
 
 	const { editions } = await hardcoverApiClient.query({
 		editions: {
-			__scalar: true,
 			book_id: true,
-			cached_contributors: true,
-			cached_image: true,
-			title: true,
+			isbn_10: true,
+			isbn_13: true,
 			__args: {
 				where: {
 					_or: [
@@ -68,7 +66,26 @@ booksRouter.openapi(booksGetRoute, async (c) => {
 		);
 	}
 
-	return c.json({ data: editions[0] }, 200);
+	const { books } = await hardcoverApiClient.query({
+		books: {
+			__args: {
+				where: {
+					id: {
+						_eq: editions[0]?.book_id
+					}
+				}
+			},
+			cached_contributors: true,
+			cached_image: true,
+			cached_tags: true,
+			headline: true,
+			slug: true,
+			title: true,
+			rating: true,
+		}
+	});
+
+	return c.json({ data: books[0] }, 200);
 });
 
 export default booksRouter;
