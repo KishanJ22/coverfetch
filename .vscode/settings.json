@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["coverfetch"]
+	"cSpell.words": ["coverfetch"],
+	"editor.formatOnSave": true
 }

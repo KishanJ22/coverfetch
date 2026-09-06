@@ -1,109 +1,101 @@
 {
-  "openapi": "3.0.0",
-  "info": {
-    "title": "coverfetch",
-    "version": "0.0.1"
-  },
-  "components": {
-    "schemas": {},
-    "parameters": {}
-  },
-  "paths": {
-    "/health": {
-      "get": {
-        "responses": {
-          "200": {
-            "def": {
-              "type": "object",
-              "shape": {
-                "status": {
-                  "def": {
-                    "type": "literal",
-                    "values": [
-                      "healthy"
-                    ]
-                  },
-                  "type": "literal",
-                  "values": {}
-                },
-                "version": {
-                  "def": {
-                    "type": "string"
-                  },
-                  "type": "string",
-                  "format": null,
-                  "minLength": null,
-                  "maxLength": null
-                }
-              }
-            },
-            "type": "object"
-          }
-        }
-      }
-    },
-    "/": {
-      "get": {
-        "responses": {
-          "200": {
-            "def": {
-              "type": "object",
-              "shape": {
-                "message": {
-                  "def": {
-                    "type": "literal",
-                    "values": [
-                      "Welcome to coverfetch!"
-                    ]
-                  },
-                  "type": "literal",
-                  "values": {}
-                }
-              }
-            },
-            "type": "object"
-          }
-        }
-      }
-    },
-    "/books/{isbn}": {
-      "get": {
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "minLength": 10
-            },
-            "required": true,
-            "name": "isbn",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "200": {},
-          "404": {
-            "description": "Returns a not found error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "enum": [
-                        "Book not found"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+	"openapi": "3.0.0",
+	"info": {
+		"title": "coverfetch",
+		"version": "0.0.1"
+	},
+	"components": {
+		"schemas": {},
+		"parameters": {}
+	},
+	"paths": {
+		"/health": {
+			"get": {
+				"responses": {
+					"200": {
+						"def": {
+							"type": "object",
+							"shape": {
+								"status": {
+									"def": {
+										"type": "literal",
+										"values": ["healthy"]
+									},
+									"type": "literal",
+									"values": {}
+								},
+								"version": {
+									"def": {
+										"type": "string"
+									},
+									"type": "string",
+									"format": null,
+									"minLength": null,
+									"maxLength": null
+								}
+							}
+						},
+						"type": "object"
+					}
+				}
+			}
+		},
+		"/": {
+			"get": {
+				"responses": {
+					"200": {
+						"def": {
+							"type": "object",
+							"shape": {
+								"message": {
+									"def": {
+										"type": "literal",
+										"values": ["Welcome to coverfetch!"]
+									},
+									"type": "literal",
+									"values": {}
+								}
+							}
+						},
+						"type": "object"
+					}
+				}
+			}
+		},
+		"/books/{isbn}": {
+			"get": {
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"minLength": 10
+						},
+						"required": true,
+						"name": "isbn",
+						"in": "path"
+					}
+				],
+				"responses": {
+					"200": {},
+					"404": {
+						"description": "Returns a not found error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"message": {
+											"type": "string",
+											"enum": ["Book not found"]
+										}
+									},
+									"required": ["message"]
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
