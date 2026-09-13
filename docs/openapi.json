@@ -1,101 +1,221 @@
 {
-	"openapi": "3.0.0",
-	"info": {
-		"title": "coverfetch",
-		"version": "0.0.1"
-	},
-	"components": {
-		"schemas": {},
-		"parameters": {}
-	},
-	"paths": {
-		"/health": {
-			"get": {
-				"responses": {
-					"200": {
-						"def": {
-							"type": "object",
-							"shape": {
-								"status": {
-									"def": {
-										"type": "literal",
-										"values": ["healthy"]
-									},
-									"type": "literal",
-									"values": {}
-								},
-								"version": {
-									"def": {
-										"type": "string"
-									},
-									"type": "string",
-									"format": null,
-									"minLength": null,
-									"maxLength": null
-								}
-							}
-						},
-						"type": "object"
-					}
-				}
-			}
-		},
-		"/": {
-			"get": {
-				"responses": {
-					"200": {
-						"def": {
-							"type": "object",
-							"shape": {
-								"message": {
-									"def": {
-										"type": "literal",
-										"values": ["Welcome to coverfetch!"]
-									},
-									"type": "literal",
-									"values": {}
-								}
-							}
-						},
-						"type": "object"
-					}
-				}
-			}
-		},
-		"/books/{isbn}": {
-			"get": {
-				"parameters": [
-					{
-						"schema": {
-							"type": "string",
-							"minLength": 10
-						},
-						"required": true,
-						"name": "isbn",
-						"in": "path"
-					}
-				],
-				"responses": {
-					"200": {},
-					"404": {
-						"description": "Returns a not found error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"message": {
-											"type": "string",
-											"enum": ["Book not found"]
-										}
-									},
-									"required": ["message"]
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+  "openapi": "3.0.0",
+  "info": {
+    "title": "coverfetch",
+    "version": "0.0.1"
+  },
+  "components": {
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "responses": {
+          "200": {
+            "def": {
+              "type": "object",
+              "shape": {
+                "status": {
+                  "def": {
+                    "type": "literal",
+                    "values": [
+                      "healthy"
+                    ]
+                  },
+                  "type": "literal",
+                  "values": {}
+                },
+                "version": {
+                  "def": {
+                    "type": "string"
+                  },
+                  "type": "string",
+                  "format": null,
+                  "minLength": null,
+                  "maxLength": null
+                }
+              }
+            },
+            "type": "object"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "responses": {
+          "200": {
+            "def": {
+              "type": "object",
+              "shape": {
+                "message": {
+                  "def": {
+                    "type": "literal",
+                    "values": [
+                      "Welcome to coverfetch!"
+                    ]
+                  },
+                  "type": "literal",
+                  "values": {}
+                }
+              }
+            },
+            "type": "object"
+          }
+        }
+      }
+    },
+    "/books/{isbn}": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "isbn",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "headline": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "slug": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "pageCount": {
+                          "type": "number"
+                        },
+                        "authors": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "minItems": 1
+                        },
+                        "coverUrl": {
+                          "type": "string"
+                        },
+                        "isbn10": {
+                          "type": "string",
+                          "minLength": 10,
+                          "maxLength": 10
+                        },
+                        "isbn13": {
+                          "type": "string",
+                          "minLength": 13,
+                          "maxLength": 13
+                        },
+                        "releaseDate": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "rating": {
+                          "type": "number",
+                          "nullable": true
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "genres": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title",
+                        "headline",
+                        "slug",
+                        "pageCount",
+                        "authors",
+                        "coverUrl",
+                        "isbn10",
+                        "isbn13",
+                        "releaseDate",
+                        "rating",
+                        "tags",
+                        "genres"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Returns a not found error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "enum": [
+                        "Book not found"
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
