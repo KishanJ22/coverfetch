@@ -4,9 +4,7 @@ const successResponseSchema = z.object({
 	message: z.literal("Welcome to coverfetch!"),
 });
 
-const rootRouter = new OpenAPIHono();
-
-rootRouter.openapi(
+const rootRouter = new OpenAPIHono().openapi(
 	createRoute({
 		method: "get",
 		path: "/",
