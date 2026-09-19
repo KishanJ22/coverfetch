@@ -1,0 +1,17 @@
+[test]
+preload = ["./src/tests/setup.ts"]
+coverage = true
+coverageReporter = ["text", "lcov"]
+coverageDir = "./coverage"
+coverageIgnoreSourcemaps = true
+coveragePathIgnorePatterns = [
+    "**/*.json",
+    "**/*.graphql",
+    "**/_mocks/**",
+    "dist/**",
+    "**/hardcover-graphql/**",
+    "./src/config.ts",
+    "**/*.test.ts",
+    "**/*.e2e.ts",
+    "**/schema.ts"
+]
