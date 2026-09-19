@@ -1,10 +1,10 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { hardcoverApiClient } from "../../clients/hardcover/client";
-import { formatBook } from "./formatBook";
-import { editionsQuery } from "./editionsQuery";
 import { booksQuery } from "./booksQuery";
+import { editionsQuery } from "./editionsQuery";
+import { formatBook } from "./formatBook";
+import { notFoundSchema, successResponseSchema } from "./schemas";
 import { validateBook } from "./validateBook";
-import { bookSchema } from "./schemas";
 
 const isDigit = (char: string) => char >= "0" && char <= "9";
 
@@ -65,15 +65,6 @@ const paramsSchema = z.object({
 	}),
 });
 
-const notFoundSchema = z.object({
-	message: z.literal("Book not found"),
-	errors: z.string().array().optional(),
-});
-
-const successResponse = z.object({
-	data: bookSchema,
-});
-
 const booksGetRoute = createRoute({
 	method: "get",
 	path: "/books/{isbn}",
@@ -84,7 +75,7 @@ const booksGetRoute = createRoute({
 		200: {
 			content: {
 				"application/json": {
-					schema: successResponse,
+					schema: successResponseSchema,
 				},
 			},
 		},
@@ -108,15 +99,14 @@ const booksGetRoute = createRoute({
 	},
 });
 
-const booksRouter = new OpenAPIHono();
-
-booksRouter.openapi(
+const booksRouter = new OpenAPIHono().openapi(
 	booksGetRoute,
 	async (c) => {
 		const { isbn } = c.req.valid("param");
 
 		const edition = await hardcoverApiClient
 			.query({
+				__name: "Editions",
 				editions: {
 					...editionsQuery.editions,
 					__args: {
@@ -133,6 +123,7 @@ booksRouter.openapi(
 
 		const book = await hardcoverApiClient
 			.query({
+				__name: "Books",
 				books: {
 					...booksQuery.books,
 					__args: {

@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 
-export const bookSchema = z.object({
+const bookSchema = z.object({
 	id: z.number(),
 	title: z.string(),
 	headline: z.string().nullable(),
@@ -17,3 +17,12 @@ export const bookSchema = z.object({
 });
 
 export type Book = z.infer<typeof bookSchema>;
+
+export const notFoundSchema = z.object({
+	message: z.literal("Book not found"),
+	errors: z.string().array().optional(),
+});
+
+export const successResponseSchema = z.object({
+	data: bookSchema,
+});
