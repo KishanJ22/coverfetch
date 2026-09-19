@@ -6,7 +6,8 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": ["**", "!**/hardcover-graphql"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -15,6 +16,7 @@
 	},
 	"linter": {
 		"enabled": true,
+		"includes": ["!**/hardcover-graphql/**"],
 		"rules": {
 			"preset": "recommended",
 			"correctness": {
