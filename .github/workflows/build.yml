@@ -25,3 +25,6 @@ jobs:
 
       - name: Run Tests
         run: bun run test
+
+      - name: Update Package Versions
+        run: bun changeset version
