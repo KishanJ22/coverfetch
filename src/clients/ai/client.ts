@@ -1,21 +1,23 @@
-import { createAnthropic } from "@ai-sdk/anthropic";
-import type { AnthropicModelId } from "@ai-sdk/anthropic/internal";
+import { createOpenAI } from "@ai-sdk/openai";
 import { config } from "../../config";
 import { useFliptClient } from "../flipt/client";
 
-export async function useAnthropicModel() {
-	//TODO: get model name from Flipt feature flag
+export async function useAiModel() {
 	const fliptClient = await useFliptClient();
 
-	const modelName: AnthropicModelId = fliptClient.evaluateVariant({
+	const model = fliptClient.evaluateVariant({
 		flagKey: "api-model",
 		entityId: "global",
 		context: {},
-	}).variantKey;
+	}).variantAttachment;
 
-	const anthropicClient = createAnthropic({
-		apiKey: config.ai.anthropicApiKey,
+	const modelName = JSON.parse(model)?.model;
+
+	const aiClient = createOpenAI({
+		baseURL: config.ai.openRouterBaseUrl,
+		apiKey: config.ai.openRouterKey,
+		name: "coverfetch",
 	});
 
-	return anthropicClient(modelName);
+	return aiClient(modelName);
 }

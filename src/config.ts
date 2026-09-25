@@ -9,7 +9,8 @@ export const configSchema = z.object({
 		apiKey: z.string(),
 	}),
 	ai: z.object({
-		anthropicApiKey: z.string(),
+		openRouterBaseUrl: z.string(),
+		openRouterKey: z.string(),
 	}),
 	flipt: z.object({
 		baseUrl: z.httpUrl(),
@@ -31,7 +32,8 @@ export const config: z.input<typeof configSchema> = {
 		apiKey: Bun.env.HARDCOVER_API_KEY,
 	},
 	ai: {
-		anthropicApiKey: Bun.env.ANTHROPIC_API_KEY,
+		openRouterBaseUrl: Bun.env.OPENROUTER_BASE_URL,
+		openRouterKey: Bun.env.OPENROUTER_API_KEY,
 	},
 	flipt: {
 		baseUrl: Bun.env.FLIPT_BASE_URL,

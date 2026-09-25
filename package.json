@@ -24,7 +24,7 @@
 		"typescript": "^7"
 	},
 	"dependencies": {
-		"@ai-sdk/anthropic": "^4.0.61",
+		"@ai-sdk/openai": "^4.0.75",
 		"@flipt-io/flipt-client-js": "^0.5.1",
 		"@genql/cli": "^6.3.4",
 		"@hono/zod-openapi": "^1.6.3",

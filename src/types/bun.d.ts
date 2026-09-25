@@ -4,7 +4,8 @@ declare module "bun" {
 		AUTH_CLIENT_ID: string;
 		AUTH_USERNAME: string;
 		AUTH_PASSWORD: string;
-		ANTHROPIC_API_KEY: string;
+		OPENROUTER_BASE_URL: string;
+		OPENROUTER_API_KEY: string;
 		HARDCOVER_BASE_URL: string;
 		HARDCOVER_API_KEY: string;
 		FLIPT_BASE_URL: string;
