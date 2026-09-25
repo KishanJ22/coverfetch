@@ -1,36 +1,23 @@
 {
 	"name": "coverfetch",
-	"module": "index.ts",
 	"version": "0.0.1",
 	"type": "module",
 	"private": true,
+	"workspaces": ["apps/*"],
 	"scripts": {
-		"dev": "bun run --hot src/app.ts",
-		"test": "bun test",
-		"test:watch": "bun test --watch",
-		"start": "bun src/app.ts",
-		"hardcover-typegen": "bun run src/generate-hardcover-spec.ts",
+		"dev": "bun run --filter '*' dev",
+		"test": "bun run --filter '*' test",
+		"test:watch": "bun run --filter '*' test:watch",
+		"start": "bun run --filter '*' start",
 		"lint": "biome check .",
 		"lint:fix": "biome check --write ."
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.12",
 		"@changesets/cli": "^3.0.3",
-		"@rcmade/hono-docs": "^1.4.0",
-		"@types/bun": "latest",
-		"msw": "^2.15.0"
+		"@types/bun": "latest"
 	},
 	"peerDependencies": {
 		"typescript": "^7"
-	},
-	"dependencies": {
-		"@ai-sdk/openai": "^4.0.75",
-		"@flipt-io/flipt-client-js": "^0.5.1",
-		"@genql/cli": "^6.3.4",
-		"@hono/zod-openapi": "^1.6.3",
-		"ai": "^7.0.112",
-		"hono": "^4.13.5",
-		"ky": "^2.1.0",
-		"zod": "^4.5.4"
 	}
 }

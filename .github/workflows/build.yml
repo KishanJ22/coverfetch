@@ -24,4 +24,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Run Tests
-        run: bun test
+        run: bun run test
+
+      - name: Update Package Versions
+        run: bun changeset version
