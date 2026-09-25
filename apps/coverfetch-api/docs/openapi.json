@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "coverfetch",
+    "title": "coverfetch-api",
     "version": "0.0.1"
   },
   "components": {
@@ -30,10 +30,7 @@
                   "def": {
                     "type": "string"
                   },
-                  "type": "string",
-                  "format": null,
-                  "minLength": null,
-                  "maxLength": null
+                  "type": "string"
                 }
               }
             },
