@@ -1,10 +1,10 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { hardcoverApiClient } from "../../clients/hardcover/client";
-import { booksQuery } from "./booksQuery";
-import { editionsQuery } from "./editionsQuery";
-import { formatBook } from "./formatBook";
-import { notFoundSchema, successResponseSchema } from "./schemas";
-import { validateBook } from "./validateBook";
+import { hardcoverApiClient } from "../../../clients/hardcover/client";
+import { booksQuery } from "../booksQuery";
+import { editionsQuery } from "../editionsQuery";
+import { formatBook } from "../formatBook";
+import { notFoundSchema, successResponseSchema } from "../schemas";
+import { validateBook } from "../validateBook";
 
 const isDigit = (char: string) => char >= "0" && char <= "9";
 

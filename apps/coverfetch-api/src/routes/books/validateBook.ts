@@ -1,4 +1,4 @@
-import type { CachedContributor } from "../../clients/hardcover/hardcover-graphql";
+import type { CachedContributor } from "../../clients/hardcover/hardcover-graphql/extended-schema";
 import type { BooksResult } from "./booksQuery";
 import type { EditionsResult } from "./editionsQuery";
 
