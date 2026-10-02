@@ -1,6 +1,9 @@
 import * as z from "zod";
 
 export const configSchema = z.object({
+	database: z.object({
+		url: z.string(),
+	}),
 	server: z.object({
 		port: z.coerce.number().min(1),
 	}),
@@ -24,6 +27,9 @@ export const configSchema = z.object({
 export type Config = z.infer<typeof configSchema>;
 
 export const config: z.input<typeof configSchema> = {
+	database: {
+		url: Bun.env.DATABASE_URL,
+	},
 	server: {
 		port: Bun.env.SERVER_PORT,
 	},
