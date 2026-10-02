@@ -1,7 +1,8 @@
 {
 	"cSpell.words": [
 		"coverfetch",
-		"flipt"
+		"flipt",
+		"OPENROUTER"
 	],
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "biomejs.biome",
