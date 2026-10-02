@@ -1,6 +1,6 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 
-const routeFilePattern = new Bun.Glob("**/*.{get,post,put,patch,delete}.ts");
+const routeFilePattern = new Bun.Glob("**/*.{get,post,put,patch,delete,all}.ts");
 const routesDir = Bun.fileURLToPath(new URL(".", import.meta.url));
 
 export async function autoloadRoutes(app: OpenAPIHono) {

@@ -1,6 +1,10 @@
 import * as z from "zod";
 
 export const configSchema = z.object({
+	auth: z.object({
+		baseUrl: z.string(),
+		secret: z.string(),
+	}),
 	database: z.object({
 		url: z.string(),
 	}),
@@ -27,6 +31,10 @@ export const configSchema = z.object({
 export type Config = z.infer<typeof configSchema>;
 
 export const config: z.input<typeof configSchema> = {
+	auth: {
+		baseUrl: Bun.env.BETTER_AUTH_URL,
+		secret: Bun.env.BETTER_AUTH_SECRET,
+	},
 	database: {
 		url: Bun.env.DATABASE_URL,
 	},

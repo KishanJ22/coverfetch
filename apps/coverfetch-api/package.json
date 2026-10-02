@@ -10,7 +10,14 @@
 		"test:watch": "bun test --watch",
 		"start": "bun src/app.ts",
 		"hardcover-typegen": "bun run src/generate-hardcover-spec.ts",
-		"db-typegen": "bun run kysely-codegen"
+		"db-typegen": "bun run kysely-codegen",
+        "db-migrate-latest": "bun --bun run kysely migrate:latest",
+        "db-migrate-up": "bun --bun kysely migrate:up",
+        "db-migrate-down": "bun --bun kysely migrate:down",
+        "db-migrate-list": "bun --bun kysely migrate:list",
+        "db-create-migration": "bun --bun kysely migrate:make",
+        "db-seed-create": "bun --bun kysely seed:make",
+        "db-seed-run": "bun --bun kysely seed:run"
 	},
 	"kysely-codegen": {
 		"dialect": "postgres",
@@ -33,6 +40,7 @@
 	},
 	"dependencies": {
 		"@ai-sdk/openai": "^4.0.75",
+		"@better-auth/api-key": "^1.7.7",
 		"@flipt-io/flipt-client-js": "^0.5.1",
 		"@genql/cli": "^6.3.4",
 		"@hono/zod-openapi": "^1.6.3",
