@@ -9,11 +9,30 @@
 		"test": "bun test",
 		"test:watch": "bun test --watch",
 		"start": "bun src/app.ts",
-		"hardcover-typegen": "bun run src/generate-hardcover-spec.ts"
+		"hardcover-typegen": "bun run src/generate-hardcover-spec.ts",
+		"db-typegen": "bun run kysely-codegen",
+        "db-migrate-latest": "bun --bun run kysely migrate:latest",
+        "db-migrate-up": "bun --bun kysely migrate:up",
+        "db-migrate-down": "bun --bun kysely migrate:down",
+        "db-migrate-list": "bun --bun kysely migrate:list",
+        "db-create-migration": "bun --bun kysely migrate:make",
+        "db-seed-create": "bun --bun kysely seed:make",
+        "db-seed-run": "bun --bun kysely seed:run"
+	},
+	"kysely-codegen": {
+		"dialect": "postgres",
+		"camelCase": true,
+		"envFile": ".env",
+		"outFile": "./src/db/types.ts",
+		"runtimeEnums": false,
+		"typeOnlyImports": true
 	},
 	"devDependencies": {
 		"@rcmade/hono-docs": "^1.4.0",
 		"@types/bun": "latest",
+		"@types/pg": "^8.23.1",
+		"kysely-codegen": "^0.20.0",
+		"kysely-ctl": "^0.21.0",
 		"msw": "^2.15.0"
 	},
 	"peerDependencies": {
@@ -21,12 +40,16 @@
 	},
 	"dependencies": {
 		"@ai-sdk/openai": "^4.0.75",
+		"@better-auth/api-key": "^1.7.7",
 		"@flipt-io/flipt-client-js": "^0.5.1",
 		"@genql/cli": "^6.3.4",
 		"@hono/zod-openapi": "^1.6.3",
 		"ai": "^7.0.112",
+		"better-auth": "^1.7.7",
 		"hono": "^4.13.5",
 		"ky": "^2.1.0",
+		"kysely": "^0.29.6",
+		"pg": "^8.23.0",
 		"zod": "^4.5.4"
 	}
 }
