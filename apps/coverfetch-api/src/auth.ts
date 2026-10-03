@@ -5,23 +5,23 @@ import { config } from "./config";
 import db from "./db/db";
 
 export const auth = betterAuth({
-    appName: "Coverfetch",
-    baseURL: config.auth.baseUrl,
-    basePath: "/auth",
-    database: {
-        db,
-        type: "postgres",
-        schemaName: "auth",
-    },
-    emailAndPassword: {
-        enabled: false,
-    },
-    plugins: [
-        apiKey({
-            references: "user",
-        }),
-        username({
-           minUsernameLength: 5, 
-        }),
-    ]
+	appName: "Coverfetch",
+	baseURL: config.auth.baseUrl,
+	basePath: "/auth",
+	database: {
+		db,
+		type: "postgres",
+		schemaName: "auth",
+	},
+	emailAndPassword: {
+		enabled: false,
+	},
+	plugins: [
+		apiKey({
+			references: "user",
+		}),
+		username({
+			minUsernameLength: 5,
+		}),
+	],
 });

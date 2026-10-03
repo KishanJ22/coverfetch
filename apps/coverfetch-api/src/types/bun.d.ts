@@ -7,7 +7,7 @@ declare module "bun" {
 		BETTER_AUTH_SECRET: string;
 		BETTER_AUTH_URL: string;
 		DATABASE_URL: string;
-		ENVIRONMENT: 'local' | 'test' | 'production';
+		ENVIRONMENT: "local" | "test" | "production";
 		FLIPT_BASE_URL: string;
 		HARDCOVER_API_KEY: string;
 		HARDCOVER_BASE_URL: string;

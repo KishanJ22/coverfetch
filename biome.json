@@ -12,7 +12,8 @@
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",
-		"indentWidth": 4
+		"indentWidth": 4,
+		"includes": ["**", "!apps/coverfetch-api/src/db/types.ts"]
 	},
 	"linter": {
 		"enabled": true,
