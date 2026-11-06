@@ -6,7 +6,7 @@ export async function useAiModel() {
 	const fliptClient = await useFliptClient();
 
 	const model = fliptClient.evaluateVariant({
-		flagKey: "api-model",
+		flagKey: "ai-model",
 		entityId: "global",
 		context: {},
 	}).variantAttachment;
