@@ -3,10 +3,7 @@ import type { Edition } from "./editionsQuery";
 import { getAuthors, getTopTags } from "./formatCachedFields";
 import type { Book } from "./schemas";
 
-export const formatBook = (
-	edition: Edition,
-	book: BookResult,
-): Book => {
+export const formatBook = (edition: Edition, book: BookResult): Book => {
 	const { book_id, isbn_10, isbn_13 } = edition;
 	const {
 		title,

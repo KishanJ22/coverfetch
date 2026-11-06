@@ -28,28 +28,28 @@
 		"typeOnlyImports": true
 	},
 	"devDependencies": {
-		"@rcmade/hono-docs": "^1.4.0",
-		"@types/bun": "latest",
+		"@rcmade/hono-docs": "^1.4.1",
+		"@types/bun": "1.4.4",
 		"@types/pg": "^8.23.1",
 		"kysely-codegen": "^0.20.0",
-		"kysely-ctl": "^0.21.0",
-		"msw": "^2.15.0"
+		"kysely-ctl": "^0.22.0",
+		"msw": "^3.0.4"
 	},
 	"peerDependencies": {
 		"typescript": "^7"
 	},
 	"dependencies": {
-		"@ai-sdk/openai": "^4.0.75",
-		"@better-auth/api-key": "^1.7.7",
-		"@flipt-io/flipt-client-js": "^0.5.1",
+		"@ai-sdk/openai": "^4.0.110",
+		"@better-auth/api-key": "^1.7.18",
+		"@flipt-io/flipt-client-js": "^0.6.0",
 		"@genql/cli": "^6.3.4",
 		"@hono/zod-openapi": "^1.6.3",
-		"ai": "^7.0.112",
-		"better-auth": "^1.7.7",
-		"hono": "^4.13.5",
-		"ky": "^2.1.0",
-		"kysely": "^0.29.6",
-		"pg": "^8.23.0",
-		"zod": "^4.5.4"
+		"ai": "^7.0.164",
+		"better-auth": "^1.7.18",
+		"hono": "^4.13.16",
+		"ky": "^2.2.0",
+		"kysely": "^0.29.8",
+		"pg": "^8.23.1",
+		"zod": "^4.6.7"
 	}
 }

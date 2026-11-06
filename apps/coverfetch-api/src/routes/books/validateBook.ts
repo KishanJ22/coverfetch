@@ -2,10 +2,7 @@ import type { BookResult } from "./booksQuery";
 import type { Edition } from "./editionsQuery";
 import { getAuthors } from "./formatCachedFields";
 
-export const validateBook = (
-	edition: Edition,
-	book: BookResult,
-) => {
+export const validateBook = (edition: Edition, book: BookResult) => {
 	const { book_id, isbn_10, isbn_13 } = edition;
 	const { cached_contributors, title, cached_image } = book;
 
