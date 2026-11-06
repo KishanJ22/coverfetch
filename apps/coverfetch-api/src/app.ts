@@ -25,4 +25,5 @@ await generateSpec(app);
 export default {
 	port: config.server.port,
 	fetch: app.fetch,
+	idleTimeout: 200,
 };
