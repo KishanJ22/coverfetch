@@ -1,9 +1,9 @@
 import { describe, expect, it } from "bun:test";
 import { testClient } from "hono/testing";
-import { mockBook } from "../../tests/books.fixtures";
-import { booksResolver, editionsResolver } from "../../tests/books.handlers";
-import { server } from "../../tests/server";
-import booksRouter from "./books.get";
+import { mockBook } from "../../../tests/books.fixtures";
+import { booksResolver, editionsResolver } from "../../../tests/books.handlers";
+import { server } from "../../../tests/server";
+import booksRouter from "./[isbn].get";
 
 describe("GET /books/:isbn", () => {
 	const client = testClient(booksRouter);
