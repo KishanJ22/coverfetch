@@ -2,6 +2,7 @@ import type { QueryResult } from "../../clients/hardcover/hardcover-graphql";
 
 export const booksQuery = {
 	books: {
+		id: true,
 		cached_contributors: true,
 		cached_image: true,
 		cached_tags: true,
@@ -14,4 +15,6 @@ export const booksQuery = {
 	},
 } as const;
 
-export type BooksResult = QueryResult<typeof booksQuery>;
+type BooksQueryResult = QueryResult<typeof booksQuery>;
+
+export type BookResult = BooksQueryResult["books"][0];

@@ -1,26 +1,15 @@
-import type { CachedContributor } from "../../clients/hardcover/hardcover-graphql";
-import type { BooksResult } from "./booksQuery";
-import type { EditionsResult } from "./editionsQuery";
+import type { BookResult } from "./booksQuery";
+import type { Edition } from "./editionsQuery";
+import { getAuthors } from "./formatCachedFields";
 
 export const validateBook = (
-	edition: EditionsResult["editions"][0],
-	book: BooksResult["books"][0],
+	edition: Edition,
+	book: BookResult,
 ) => {
 	const { book_id, isbn_10, isbn_13 } = edition;
 	const { cached_contributors, title, cached_image } = book;
 
-	const authors = cached_contributors.reduce(
-		(acc: string[], { author }: CachedContributor) => {
-			const authorName = author.name;
-
-			if (!acc.includes(authorName)) {
-				acc.push(authorName);
-			}
-
-			return acc;
-		},
-		[] as string[],
-	);
+	const authors = getAuthors(cached_contributors);
 
 	const errors: string[] = [];
 

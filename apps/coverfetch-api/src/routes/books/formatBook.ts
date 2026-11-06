@@ -1,12 +1,11 @@
-import type { BasicTagType } from "../../clients/hardcover/hardcover-graphql";
-import type { CachedContributor } from "../../clients/hardcover/hardcover-graphql/extended-schema";
-import type { BooksResult } from "./booksQuery";
-import type { EditionsResult } from "./editionsQuery";
+import type { BookResult } from "./booksQuery";
+import type { Edition } from "./editionsQuery";
+import { getAuthors, getTopTags } from "./formatCachedFields";
 import type { Book } from "./schemas";
 
 export const formatBook = (
-	edition: EditionsResult["editions"][0],
-	book: BooksResult["books"][0],
+	edition: Edition,
+	book: BookResult,
 ): Book => {
 	const { book_id, isbn_10, isbn_13 } = edition;
 	const {
@@ -21,38 +20,9 @@ export const formatBook = (
 		release_date,
 	} = book;
 
-	const authors = cached_contributors.reduce(
-		(acc: string[], { author }: CachedContributor) => {
-			const authorName = author.name;
-
-			if (acc.includes(authorName)) {
-				return acc;
-			} else {
-				acc.push(authorName);
-			}
-
-			return acc;
-		},
-		[] as string[],
-	);
-
-	const getTopTags = (tagType: "Tag" | "Genre") => {
-		const sortedTags = cached_tags[tagType].sort(
-			(a: any, b: any) => b.count > a.count,
-		) as BasicTagType[];
-
-		return sortedTags.slice(0, 3).reduce((acc, { tag }) => {
-			if (acc.includes(tag)) {
-				return acc;
-			} else {
-				acc.push(tag);
-				return acc;
-			}
-		}, [] as string[]);
-	};
-
-	const tags = getTopTags("Tag");
-	const genres = getTopTags("Genre");
+	const authors = getAuthors(cached_contributors);
+	const tags = getTopTags(cached_tags, "Tag");
+	const genres = getTopTags(cached_tags, "Genre");
 
 	return {
 		id: book_id,
