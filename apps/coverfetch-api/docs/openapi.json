@@ -63,6 +63,132 @@
         }
       }
     },
+    "/books/{id}/reading-strategy": {
+      "post": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "familiarity": {
+                    "type": "string",
+                    "enum": [
+                      "newToTopic",
+                      "someKnowledge",
+                      "strongKnowledge"
+                    ]
+                  },
+                  "goal": {
+                    "type": "string",
+                    "enum": [
+                      "applying",
+                      "enjoyment",
+                      "learning",
+                      "discussion"
+                    ]
+                  },
+                  "readingStatus": {
+                    "type": "string",
+                    "enum": [
+                      "firstRead",
+                      "rereading",
+                      "alreadyStarted"
+                    ],
+                    "default": "firstRead"
+                  }
+                },
+                "required": [
+                  "familiarity",
+                  "goal"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "points": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "title": {
+                                "type": "string",
+                                "description": "Short imperative takeaway, under 10 words."
+                              },
+                              "detail": {
+                                "type": "string",
+                                "description": "One or two sentences giving the reason or a practical tip. Does not restate the title."
+                              }
+                            },
+                            "required": [
+                              "title",
+                              "detail"
+                            ]
+                          },
+                          "description": "3 to 5 reading strategy points."
+                        }
+                      },
+                      "required": [
+                        "points"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "enum": [
+                        "Book not found"
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/books/{isbn}": {
       "get": {
         "parameters": [
