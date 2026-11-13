@@ -15,6 +15,6 @@ export const booksQuery = {
 	},
 } as const;
 
-type BooksQueryResult = QueryResult<typeof booksQuery>;
+export type BooksQueryResult = QueryResult<typeof booksQuery>;
 
 export type BookResult = BooksQueryResult["books"][0];

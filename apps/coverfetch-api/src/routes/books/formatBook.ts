@@ -3,8 +3,12 @@ import type { Edition } from "./editionsQuery";
 import { getAuthors, getTopTags } from "./formatCachedFields";
 import type { Book } from "./schemas";
 
-export const formatBook = (edition: Edition, book: BookResult): Book => {
-	const { book_id, isbn_10, isbn_13 } = edition;
+export const formatBook = (
+	edition: Edition,
+	book: BookResult,
+	bookId: number,
+): Book => {
+	const { isbn_10, isbn_13 } = edition;
 	const {
 		title,
 		headline,
@@ -22,7 +26,7 @@ export const formatBook = (edition: Edition, book: BookResult): Book => {
 	const genres = getTopTags(cached_tags, "Genre");
 
 	return {
-		id: book_id,
+		id: bookId,
 		title: title as string,
 		headline,
 		slug,

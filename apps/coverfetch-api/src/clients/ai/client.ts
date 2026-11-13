@@ -11,13 +11,13 @@ export async function useAiModel() {
 		context: {},
 	}).variantAttachment;
 
-	const modelName = JSON.parse(model)?.model;
-
 	const aiClient = createOpenAI({
 		baseURL: config.ai.openRouterBaseUrl,
 		apiKey: config.ai.openRouterKey,
 		name: "coverfetch",
 	});
+
+	const modelName = JSON.parse(model)?.model;
 
 	return aiClient(modelName);
 }

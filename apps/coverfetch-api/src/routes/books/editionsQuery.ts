@@ -8,6 +8,6 @@ export const editionsQuery = {
 	},
 } as const;
 
-type EditionsResult = QueryResult<typeof editionsQuery>;
+export type EditionsResult = QueryResult<typeof editionsQuery>;
 
 export type Edition = EditionsResult["editions"][0];
