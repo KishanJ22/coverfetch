@@ -1,3 +1,4 @@
+import type { BookDetails } from "../routes/books/[id]/bookDetailsQuery";
 import type { BookResult } from "../routes/books/booksQuery";
 import type { Edition } from "../routes/books/editionsQuery";
 
@@ -26,3 +27,13 @@ export const mockBook = {
 	pages: 532,
 	release_date: "2024-12-20",
 } satisfies BookResult;
+
+export const mockBookDetails = {
+	title: mockBook.title,
+	description:
+		"A practical guide to building applications with foundation models.",
+	cached_contributors: mockBook.cached_contributors,
+	cached_tags: mockBook.cached_tags,
+	pages: mockBook.pages,
+	release_date: mockBook.release_date,
+} satisfies BookDetails;

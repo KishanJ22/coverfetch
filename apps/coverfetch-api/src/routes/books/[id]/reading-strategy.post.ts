@@ -1,6 +1,6 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { hardcoverApiClient } from "../../../clients/hardcover/client";
-import { bookByHardcoverIdQuery } from "../bookByHardcoverIdQuery";
+import db from "../../../db/db";
 import { notFoundSchema } from "../schemas";
 import { bookDetailsQuery } from "./bookDetailsQuery";
 import { generateReadingStrategy } from "./generateReadingStrategy";
@@ -32,7 +32,16 @@ const bodySchema = z.object({
 });
 
 const paramsSchema = z.object({
-	id: z.string(),
+	id: z.coerce
+		.number({ error: "must be a positive whole number" })
+		.int({ error: "must be a positive whole number" })
+		.positive({ error: "must be a positive whole number" })
+		.openapi({
+			param: {
+				name: "id",
+				in: "path",
+			},
+		}),
 });
 
 export const strategyPointsSchema = z.object({
@@ -50,6 +59,10 @@ export const strategyPointsSchema = z.object({
 			}),
 		)
 		.describe("3 to 5 reading strategy points."),
+});
+
+const badRequestSchema = z.object({
+	message: z.string(),
 });
 
 const successResponseSchema = z.object({
@@ -77,12 +90,22 @@ const readingStrategyRoute = createRoute({
 				},
 			},
 		},
+		400: {
+			content: {
+				"application/json": {
+					schema: badRequestSchema,
+				},
+			},
+			description:
+				"Returns a validation error for the id or request body",
+		},
 		404: {
 			content: {
 				"application/json": {
 					schema: notFoundSchema,
 				},
 			},
+			description: "Returns a not found error",
 		},
 	},
 });
@@ -93,9 +116,17 @@ const readingStrategyRouter = new OpenAPIHono().openapi(
 		const { id } = c.req.valid("param");
 		const { familiarity, goal, readingStatus } = c.req.valid("json");
 
-		const { hardcoverId } = await bookByHardcoverIdQuery(
-			Number(id),
-		).executeTakeFirstOrThrow();
+		const storedBook = await db
+			.selectFrom("coverfetch.books")
+			.where("id", "=", id)
+			.select("hardcoverId")
+			.executeTakeFirst();
+
+		if (!storedBook) {
+			return c.json({ message: "Book not found" as const }, 404);
+		}
+
+		const { hardcoverId } = storedBook;
 
 		const bookDetails = await hardcoverApiClient
 			.query({
@@ -135,6 +166,23 @@ const readingStrategyRouter = new OpenAPIHono().openapi(
 			},
 			200,
 		);
+	},
+	(result, c) => {
+		if (!result.success) {
+			const issue = result.error.issues[0];
+			const field = issue?.path.join(".");
+
+			return c.json(
+				{
+					message: issue
+						? field
+							? `${field}: ${issue.message}`
+							: issue.message
+						: "Please check the request",
+				},
+				400,
+			);
+		}
 	},
 );
 
