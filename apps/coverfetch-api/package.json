@@ -6,18 +6,21 @@
 	"private": true,
 	"scripts": {
 		"dev": "bun run --hot src/app.ts",
-		"test": "bun test",
-		"test:watch": "bun test --watch",
+		"test": "bun --env-file=.env.test test",
+		"test:watch": "bun --env-file=.env.test test --watch",
 		"start": "bun src/app.ts",
 		"hardcover-typegen": "bun run src/generate-hardcover-spec.ts",
 		"db-typegen": "bun run kysely-codegen",
-        "db-migrate-latest": "bun --bun run kysely migrate:latest",
-        "db-migrate-up": "bun --bun kysely migrate:up",
-        "db-migrate-down": "bun --bun kysely migrate:down",
-        "db-migrate-list": "bun --bun kysely migrate:list",
-        "db-create-migration": "bun --bun kysely migrate:make",
-        "db-seed-create": "bun --bun kysely seed:make",
-        "db-seed-run": "bun --bun kysely seed:run"
+		"db-migrate-latest": "bun --bun run kysely migrate:latest",
+		"db-migrate-up": "bun --bun kysely migrate:up",
+		"db-migrate-down": "bun --bun kysely migrate:down",
+		"db-migrate-list": "bun --bun kysely migrate:list",
+		"db-create-migration": "bun --bun kysely migrate:make",
+		"db-seed-create": "bun --bun kysely seed:make",
+		"db-seed-run": "bun --bun kysely seed:run",
+        "test-db:start": "docker compose -f ./docker-compose.yml up -d && bun --env-file=.env.test src/tests/test-db-healthcheck.ts && bun run test-db:prepare",
+        "test-db:prepare": "bun --env-file=.env.test --bun kysely migrate:latest",
+        "test-db:stop": "docker compose -f ./docker-compose.yml down --volumes"
 	},
 	"kysely-codegen": {
 		"dialect": "postgres",
@@ -28,6 +31,7 @@
 		"typeOnlyImports": true
 	},
 	"devDependencies": {
+		"@mswjs/interceptors": "^0.45.11",
 		"@rcmade/hono-docs": "^1.4.1",
 		"@types/bun": "1.4.4",
 		"@types/pg": "^8.23.1",
