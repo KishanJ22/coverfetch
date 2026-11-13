@@ -128,7 +128,7 @@ describe("GET /books/:isbn", () => {
 	it("returns 500 when an error is returned when getting the Edition", async () => {
 		//? Suppresses the error stack trace from the error
 		spyOn(console, "error").mockImplementationOnce(() => {});
-		
+
 		server.use(hardcoverErrorResolver("Editions"));
 
 		const res = await client.books[":isbn"].$get({
