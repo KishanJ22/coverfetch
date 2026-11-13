@@ -21,6 +21,8 @@ export type JsonPrimitive = boolean | number | string | null;
 
 export type JsonValue = JsonArray | JsonObject | JsonPrimitive;
 
+export type Numeric = ColumnType<string, number | string, number | string>;
+
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export interface AuthAccount {
@@ -98,7 +100,7 @@ export interface AuthVerification {
 
 export interface CoverfetchBooks {
   createdAt: Generated<Timestamp>;
-  hardcoverId: string;
+  hardcoverId: Numeric;
   id: Generated<number>;
   title: string;
 }
@@ -113,7 +115,11 @@ export interface CoverfetchReadingStrategies {
   content: Json;
   familiarity: string;
   generatedAt: Timestamp;
+  goal: string;
   id: Generated<number>;
+  modelName: string;
+  promptVersion: Numeric;
+  readingStatus: string;
 }
 
 export interface DB {

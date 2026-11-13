@@ -1,10 +1,12 @@
-import { graphql, HttpResponse } from "msw";
+import { HttpResponse } from "msw";
+import { graphql } from "msw/graphql";
 import { config } from "../config.js";
-import type { BooksResult } from "../routes/books/booksQuery.js";
+import type { BookDetails } from "../routes/books/[id]/bookDetailsQuery.js";
+import type { BooksQueryResult } from "../routes/books/booksQuery.js";
 import type { EditionsResult } from "../routes/books/editionsQuery.js";
-import { mockBook, mockEdition } from "./books.fixtures.js";
+import { mockBook, mockBookDetails, mockEdition } from "./books.fixtures.js";
 
-const hardcover = graphql.link(config.hardcover.baseUrl);
+export const hardcover = graphql.link(config.hardcover.baseUrl);
 
 /**
  *? The genql client sends anonymous operations (no operation name), so
@@ -19,11 +21,31 @@ export const editionsResolver = (
 		}),
 	);
 
-export const booksResolver = (books: BooksResult["books"] = [mockBook]) =>
+export const booksResolver = (books: BooksQueryResult["books"] = [mockBook]) =>
 	hardcover.query("Books", () =>
 		HttpResponse.json({
 			data: { books },
 		}),
 	);
 
-export const booksHandlers = [editionsResolver(), booksResolver()];
+export const bookDetailsResolver = (books: BookDetails[] = [mockBookDetails]) =>
+	hardcover.query("Book", () =>
+		HttpResponse.json({
+			data: { books },
+		}),
+	);
+
+export const hardcoverErrorResolver = (
+	operation: "Editions" | "Books" | "Book",
+) =>
+	hardcover.query(operation, () =>
+		HttpResponse.json({
+			errors: [{ message: "Something went wrong" }],
+		}),
+	);
+
+export const booksHandlers = [
+	editionsResolver(),
+	booksResolver(),
+	bookDetailsResolver(),
+];

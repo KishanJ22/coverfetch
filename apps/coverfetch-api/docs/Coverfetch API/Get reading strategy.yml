@@ -1,0 +1,20 @@
+info:
+  name: Get reading strategy
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{baseUrl}}/books/:id/reading-strategy"
+  params:
+    - name: id
+      value: "428023"
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

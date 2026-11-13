@@ -1,10 +1,12 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { hardcoverApiClient } from "../../clients/hardcover/client";
-import { booksQuery } from "./booksQuery";
-import { editionsQuery } from "./editionsQuery";
-import { formatBook } from "./formatBook";
-import { notFoundSchema, successResponseSchema } from "./schemas";
-import { validateBook } from "./validateBook";
+import { hardcoverApiClient } from "../../../clients/hardcover/client";
+import { bookByHardcoverIdQuery } from "../bookByHardcoverIdQuery";
+import { booksQuery } from "../booksQuery";
+import { editionsQuery } from "../editionsQuery";
+import { formatBook } from "../formatBook";
+import { bookSchema, notFoundSchema } from "../schemas";
+import { validateBook } from "../validateBook";
+import { addBook } from "./addBook";
 
 const isDigit = (char: string) => char >= "0" && char <= "9";
 
@@ -63,6 +65,10 @@ const paramsSchema = z.object({
 			in: "path",
 		},
 	}),
+});
+
+const successResponseSchema = z.object({
+	data: bookSchema,
 });
 
 const booksGetRoute = createRoute({
@@ -153,7 +159,15 @@ const booksRouter = new OpenAPIHono().openapi(
 			);
 		}
 
-		return c.json({ data: formatBook(edition, book) }, 200);
+		const bookExists = await bookByHardcoverIdQuery(
+			edition.book_id,
+		).executeTakeFirst();
+
+		const bookId =
+			bookExists?.id ??
+			(await addBook(book).executeTakeFirstOrThrow()).bookId;
+
+		return c.json({ data: formatBook(edition, book, bookId) }, 200);
 	},
 	(result, c) => {
 		if (!result.success) {

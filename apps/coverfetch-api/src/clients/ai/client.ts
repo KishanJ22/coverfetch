@@ -6,18 +6,18 @@ export async function useAiModel() {
 	const fliptClient = await useFliptClient();
 
 	const model = fliptClient.evaluateVariant({
-		flagKey: "api-model",
+		flagKey: "ai-model",
 		entityId: "global",
 		context: {},
 	}).variantAttachment;
-
-	const modelName = JSON.parse(model)?.model;
 
 	const aiClient = createOpenAI({
 		baseURL: config.ai.openRouterBaseUrl,
 		apiKey: config.ai.openRouterKey,
 		name: "coverfetch",
 	});
+
+	const modelName = JSON.parse(model)?.model;
 
 	return aiClient(modelName);
 }

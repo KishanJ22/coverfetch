@@ -6,11 +6,15 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # Never cancel a run on main: it pushes version bumps, and cancelling
+  # between the commit and the push leaves the bump unreleased.
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -23,8 +27,20 @@ jobs:
       - name: Install Dependencies
         run: bun install --frozen-lockfile
 
+      - name: Start test database
+        working-directory: apps/coverfetch-api
+        run: bun run test-db:start
+
       - name: Run Tests
         run: bun run test
 
       - name: Update Package Versions
-        run: bun changeset version
+        run: |
+          if [ -z "$(find .changeset -name '*.md' ! -name 'README.md' -print -quit)" ]; then
+            echo "No changesets pending — skipping version bump."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          bun changeset version
+          git push
