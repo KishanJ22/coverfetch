@@ -1,7 +1,7 @@
 {
 	"name": "coverfetch-api",
 	"module": "src/app.ts",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"type": "module",
 	"private": true,
 	"scripts": {
