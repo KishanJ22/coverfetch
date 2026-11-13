@@ -18,8 +18,7 @@
 		"db-create-migration": "bun --bun kysely migrate:make",
 		"db-seed-create": "bun --bun kysely seed:make",
 		"db-seed-run": "bun --bun kysely seed:run",
-        "test-db:start": "docker compose -f ./docker-compose.yml up -d && bun --env-file=.env.test src/tests/test-db-healthcheck.ts && bun run test-db:prepare",
-        "test-db:prepare": "bun --env-file=.env.test --bun kysely migrate:latest",
+        "test-db:start": "docker compose -f ./docker-compose.yml up -d --wait && echo '✅ Test database is ready' && bun --env-file=.env.test --bun kysely migrate:latest",
         "test-db:stop": "docker compose -f ./docker-compose.yml down --volumes"
 	},
 	"kysely-codegen": {

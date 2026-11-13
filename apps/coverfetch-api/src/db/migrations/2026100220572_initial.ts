@@ -5,6 +5,7 @@ export async function up(db: Kysely<any>): Promise<void> {
 
 	//? Create minimal user table for testing
 	if (Bun.env.ENVIRONMENT === "test") {
+		await db.schema.createSchema("auth").ifNotExists().execute();
 		await db.schema
 			.withSchema("auth")
 			.createTable("user")

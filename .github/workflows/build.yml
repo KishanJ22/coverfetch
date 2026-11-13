@@ -23,6 +23,10 @@ jobs:
       - name: Install Dependencies
         run: bun install --frozen-lockfile
 
+      - name: Start test database
+        working-directory: apps/coverfetch-api
+        run: bun run test-db:start
+
       - name: Run Tests
         run: bun run test
 
